@@ -13,7 +13,7 @@ dotenv.config()
 
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb+srv://0xsensei:WSkVr2TqbNcHruOE@cluster0.tyxoc.mongodb.net", {
+    MongooseModule.forRoot(process.env.MONGO_URI, {
       dbName: "test",
     }),
     CatsModule,
