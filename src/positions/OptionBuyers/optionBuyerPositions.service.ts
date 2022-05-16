@@ -27,14 +27,15 @@ export class OptionBuyerPositionService {
     return this.optionBuyerPositionModel.find().exec();
   }
 
-  async getAllPositionsForUser(user: string): Promise<OptionBuyerPosition[]> {
-    return this.optionBuyerPositionModel.findOne({
+  async getActiveLongsForUser(user: string): Promise<OptionBuyerPosition[]> {
+    return this.optionBuyerPositionModel.find({
       user: user,
-    });
+      status: 'ACTIVE'
+    }).exec();
   }
 
   async updateUserPosition(updatedPosition: OptionBuyerPosition) {
-    return this.optionBuyerPositionModel.updateOne(
+    return this.optionBuyerPositionModel.updateMany(
       {
         user: updatedPosition.user,
         strike: updatedPosition.strike,

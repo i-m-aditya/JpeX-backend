@@ -3,36 +3,37 @@ import { OptionSellerPositionDto } from './dto/create-optionSeller-position.dto'
 import { OptionSellerPositionService } from './optionSellerPositions.service';
 import { OptionSellerPosition } from './schema/optionSellerPositions.schema';
 
-
 @Controller('positions/seller')
 export class OptionSellerPositionController {
   constructor(private readonly positionService: OptionSellerPositionService) {}
 
   @Post()
   async create(@Body() createPositionDto: OptionSellerPositionDto) {
-    console.log("Yelllllo");
+    console.log('Creating short position');
     await this.positionService.create(createPositionDto);
   }
 
-  @Get()
-  async findAll(): Promise<OptionSellerPosition[]> {
-    console.log('Fetch all');
+  @Get(':user')
+  async getAllShortPositionsForUser(
+    @Param('user') user: string,
+  ): Promise<OptionSellerPosition[]> {
+    console.log('Get all shorts');
 
-    return await this.positionService.findAll();
+    return await this.positionService.getActiveShortsForUser(user);
   }
 
-  @Get(":user")
-  async findByUser(@Param("user") user:string): Promise<OptionSellerPosition[]> {
-    console.log("Find by user");
-    
-    return await this.positionService.getAllPositionsForUser(user)
-  }
-
-  @Post("update")
+  @Post('update')
   async updatePosition(@Body() positionDto: OptionSellerPositionDto) {
-    console.log("Update Position", positionDto);
+    console.log('Update Position', positionDto);
 
-    this.positionService.updatePosition(positionDto)
-    
+    this.positionService.updatePosition(positionDto);
+  }
+
+  @Get('epoch/:epoch')
+  async findByEpoch(
+    @Param('epoch') epoch: Number,
+  ): Promise<OptionSellerPosition[]> {
+    console.log('Find by epoch triggered');
+    return await this.positionService.findByEpoch(epoch);
   }
 }

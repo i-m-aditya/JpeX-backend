@@ -13,8 +13,8 @@ dotenv.config()
 
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb://127.0.0.1:27017", {
-      dbName: "test"
+    MongooseModule.forRoot("mongodb+srv://0xsensei:WSkVr2TqbNcHruOE@cluster0.tyxoc.mongodb.net", {
+      dbName: "test",
     }),
     CatsModule,
     OptionSellerPositionModule,

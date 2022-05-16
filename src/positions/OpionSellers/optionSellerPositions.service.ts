@@ -19,9 +19,10 @@ export class OptionSellerPositionService {
     return this.optionSellerPositionModel.find().exec();
   }
 
-  async getAllPositionsForUser(user: string): Promise<OptionSellerPosition[]> {
-    return this.optionSellerPositionModel.findOne({
+  async getActiveShortsForUser(user: string): Promise<OptionSellerPosition[]> {
+    return this.optionSellerPositionModel.find({
       user: user,
+      status: 'ACTIVE'
     });
   }
 
@@ -38,5 +39,15 @@ export class OptionSellerPositionService {
         $set: updatedPosition,
       },
     );
+  }
+
+  async findByEpoch(epoch: Number): Promise<OptionSellerPosition[]> {
+
+    console.log("Epoch", epoch);
+    
+    return this.optionSellerPositionModel.find({
+      epoch: epoch,
+      status: "ACTIVE"
+    })
   }
 }

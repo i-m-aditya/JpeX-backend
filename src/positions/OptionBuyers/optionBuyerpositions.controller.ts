@@ -10,22 +10,14 @@ export class OptionBuyerPositionController {
 
   @Post()
   async create(@Body() createPositionDto: OptionBuyerPositionDto) {
-    console.log("Yelllllo");
+    console.log("Creating long position");
     await this.positionService.create(createPositionDto);
   }
-
-  @Get()
-  async findAll(): Promise<OptionBuyerPosition[]> {
-    console.log('Fetch all');
-
-    return await this.positionService.findAll();
-  }
-
   @Get(":user")
-  async findByUser(@Param("user") user:string): Promise<OptionBuyerPosition[]> {
-    console.log("Find by user");
+  async getActiveLongsForUser(@Param("user") user:string): Promise<OptionBuyerPosition[]> {
+    console.log("Get active longs");
     
-    return await this.positionService.getAllPositionsForUser(user)
+    return await this.positionService.getActiveLongsForUser(user)
   }
 
   @Post("update")
